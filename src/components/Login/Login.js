@@ -80,6 +80,7 @@ const Login = () => {
                 .auth()
                 .createUserWithEmailAndPassword(user.email, user.password)
                 .then((response) => {
+                    console.log(response.user);
                     const newUser = { ...response.user };
                     newUser.error = '';
                     newUser.successful = true;
