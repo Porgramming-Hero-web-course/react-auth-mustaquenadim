@@ -1,3 +1,32 @@
+/* custom style */
+
+/* header style */
+.custom-bg {
+    background-image: url('./assets/Bg.png');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}
+/* end header style */
+
+/* vehicle style */
+.card:hover {
+    margin-top: -10px;
+    transition: 0.3s;
+    background-color: #61ffff !important;
+}
+/* end vehicle style */
+
+/* destination style */
+.google-map {
+    width: 100%;
+    height: 100vh;
+}
+/* end destination style */
+
+/* end custom style */
+
 .App {
   text-align: center;
 }
