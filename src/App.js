@@ -8,6 +8,7 @@ import Destination from './components/Destination/Destination';
 import Blog from './components/Blog/Blog';
 import Contact from './components/Contact/Contact';
 import Login from './components/Login/Login';
+import NoMatch from './components/NoMatch/NoMatch';
 
 export const UserContext = createContext();
 
@@ -35,6 +36,9 @@ function App() {
                     </Route>
                     <Route path='/login'>
                         <Login />
+                    </Route>
+                    <Route path='*'>
+                        <NoMatch />
                     </Route>
                 </Switch>
             </Router>

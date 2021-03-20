@@ -7,7 +7,7 @@ const Vehicles = (props) => {
     return (
         <div className='col-lg-3'>
             <Link to={`/destination/${id}`}>
-                <div className='card text-center bg-white'>
+                <div className='card text-center bg-white custom-card'>
                     <img
                         className='card-img-top w-100 p-3 img-fluid'
                         src={image}

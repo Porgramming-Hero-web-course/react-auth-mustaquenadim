@@ -30,10 +30,10 @@ export const handleGoogleSignIn = () => {
         });
 };
 
-export const createUserWithEmailAndPassword = (name, email, password) => {
+export const createUserWithEmailAndPassword = (name, email, password, confirmPassword) => {
     return firebase
         .auth()
-        .createUserWithEmailAndPassword(email, password)
+        .createUserWithEmailAndPassword(email, password, confirmPassword)
         .then((response) => {
             const newUser = response.user;
             newUser.error = '';
@@ -59,6 +59,7 @@ export const signInWithEmailAndPassword = (email, password) => {
             newUser.successful = true;
             const { displayName, email } = response.user;
             const signedInUser = {
+                isSignedIn: true,
                 name: displayName,
                 email: email,
             };

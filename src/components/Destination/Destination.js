@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import map from '../../assets/Map.png';
 import vehicles from '../../Data/Data.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserFriends } from '@fortawesome/free-solid-svg-icons';

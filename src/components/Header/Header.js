@@ -51,7 +51,7 @@ const Header = () => {
                                 </Link>
                             </li>
                             <li className='nav-item px-3'>
-                                <h5 className='nav-link active'>{loggedInUser.name}</h5>
+                                <h5 className='nav-link active'>{loggedInUser.name || loggedInUser.displayName}</h5>
                             </li>
                             <li className='nav-item px-3'>
                                 <Link to='/login' className='nav-link active btn btn-info text-white'>
