@@ -17,42 +17,9 @@ const Login = () => {
         firebase.initializeApp(firebaseConfig);
     }
 
-    // google sign in handle
-    const handleGoogleSignIn = () => {
-        var provider = new firebase.auth.GoogleAuthProvider();
-        firebase
-            .auth()
-            .signInWithPopup(provider)
-            .then((response) => {
-                setLoggedInUser(response.user);
-                history.replace(from);
-            })
-            .catch((error) => {
-                console.log(error.message);
-            });
-    };
-
-    // facebook sign in handle
-    const handleFacebookSignIn = () => {
-        var provider = new firebase.auth.FacebookAuthProvider();
-        firebase
-            .auth()
-            .signInWithPopup(provider)
-            .then((response) => {
-                setLoggedInUser(response.user);
-                history.replace(from);
-            })
-            .catch((error) => {
-                console.log(error.message);
-            });
-    };
-
-    // log in using email and password
-    const [newUser, setNewUser] = useState(true);
-    // const [nam, setName] = useState('');
-
+    // Create an account or Login
+    const [createUser, setCreateUser] = useState(true);
     const [user, setUser] = useState({
-        isSignedIn: false,
         name: '',
         email: '',
         password: '',
@@ -61,42 +28,32 @@ const Login = () => {
         successful: false,
     });
 
-    const handleBlur = (event) => {
-        let newUser;
+    const onBlurHandler = (event) => {
+        let newUser = {};
         let isFieldValid = true;
-        let isTwoPasswordValid = true;
-        console.log(event.target.name, event.target.value);
         if (event.target.name === 'email') {
             isFieldValid = /\S+@\S+\.\S+/.test(event.target.value);
         }
-        if (
-            event.target.name === 'password' ||
-            event.target.name === 'confirmPassword'
-        ) {
+        if (event.target.name === 'password' || event.target.name === 'confirmPassword') {
             const isPasswordValid = event.target.value.length > 6;
             const passwordHasNumber = /\d{1}/.test(event.target.value);
-            isTwoPasswordValid = isPasswordValid && passwordHasNumber;
+            isFieldValid = isPasswordValid && passwordHasNumber;
         }
-        if (isFieldValid && isTwoPasswordValid) {
-            // const newUser = { ...user };
+        if (isFieldValid) {
             newUser = { ...user };
-            console.log(newUser.password, newUser.confirmPassword);
             newUser[event.target.name] = event.target.value;
             setUser(newUser);
-            // console.log(user);
         }
-        if (isFieldValid && isTwoPasswordValid &&
-            newUser.confirmPassword &&
-            newUser.password !== newUser.confirmPassword
-        ) {
-            newUser.error = 'Password is not valid or Password not matched';
-        } else {
-            newUser.error = ' ';
+        if (newUser.confirmPassword && newUser.password !== newUser.confirmPassword) {
+            newUser.error = 'Password not matched';
+        } 
+        else {
+            newUser.error = '';
         }
     };
 
     const handleSubmit = (event) => {
-        if (newUser && user.email && user.password === user.confirmPassword) {
+        if (createUser && user.email && user.password === user.confirmPassword) {
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(user.email, user.password)
@@ -106,8 +63,6 @@ const Login = () => {
                     newUser.successful = true;
                     setUser(newUser);
                     updateUserName(user.name);
-                    // setLoggedInUser(newUser);
-                    // history.replace(from);
                 })
                 .catch((error) => {
                     const newUser = { ...user };
@@ -117,12 +72,11 @@ const Login = () => {
                 });
         }
 
-        if (!newUser && user.email && user.password) {
+        if (!createUser && user.email && user.password) {
             firebase
                 .auth()
                 .signInWithEmailAndPassword(user.email, user.password)
                 .then((response) => {
-                    // const newUser = { ...user };
                     const newUser = response.user;
                     newUser.error = '';
                     newUser.successful = true;
@@ -140,125 +94,99 @@ const Login = () => {
         event.preventDefault();
     };
 
+    // Continue with Google
+    const handleGoogleSignIn = () => {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase
+            .auth()
+            .signInWithPopup(provider)
+            .then((response) => {
+                setLoggedInUser(response.user);
+                history.replace(from);
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+    };
+
+    // Continue with Facebook
+    const handleFacebookSignIn = () => {
+        var provider = new firebase.auth.FacebookAuthProvider();
+        firebase
+            .auth()
+            .signInWithPopup(provider)
+            .then((response) => {
+                setLoggedInUser(response.user);
+                history.replace(from);
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+    };
+
+    // Update Name
     const updateUserName = (name) => {
         const user = firebase.auth().currentUser;
-
         user.updateProfile({
             displayName: name,
         })
-            .then(function () {
+            .then(() => {
                 console.log('username updated successfully.');
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             });
     };
 
     return (
         <div className='text-center container py-5 w-50'>
-            <form
-                onSubmit={handleSubmit}
-                className='border border-secondary p-3 rounded'
-            >
+            <form onSubmit={handleSubmit} className='border border-secondary p-3 rounded'>
                 <legend className='fw-bold'>
-                    {newUser ? 'Create an account' : 'Login'}
+                    {createUser ? 'Create an account' : 'Login'}
                 </legend>
                 {user.successful && (
                     <p className='text-success'>
-                        Account {newUser ? 'created' : 'logged in'}{' '}
-                        successfully.
+                        Account {createUser ? 'created' : 'logged in'} successfully.
                     </p>
                 )}
-                <p className='text-danger'>{user.error}</p>
-                {newUser && (
-                    <input
-                        type='text'
-                        className='form-control'
-                        name='name'
-                        onBlur={handleBlur}
-                        placeholder='Name'
-                        required
-                    />
+                <p className='text-danger'> {user.error} </p>
+                {createUser && (
+                    <div className='form-group'>
+                        <input type='text' className='form-control' name='name' onBlur={onBlurHandler} placeholder='Name' required/>
+                    </div>
                 )}
-                <br />
-                <input
-                    type='email'
-                    className='form-control'
-                    name='email'
-                    onBlur={handleBlur}
-                    placeholder='Email'
-                    required
-                />
-                <br />
-                <input
-                    type='password'
-                    className='form-control'
-                    name='password'
-                    onBlur={handleBlur}
-                    placeholder='Password'
-                    required
-                />
-                <br />
-                {newUser && (
-                    <input
-                        type='password'
-                        name='confirmPassword'
-                        className='form-control'
-                        onBlur={handleBlur}
-                        placeholder='Confirm Password'
-                        required
-                    />
+                <div className='form-group'>
+                    <input type='email' className='form-control' name='email' onBlur={onBlurHandler}placeholder='Email' required/>
+                </div>
+                <div className='form-group'>
+                    <input type='password' className='form-control' name='password' onBlur={onBlurHandler} placeholder='Password' required/>
+                </div>
+                {createUser && (
+                    <div className='form-group'>
+                        <input type='password' name='confirmPassword' className='form-control' onBlur={onBlurHandler} placeholder='Confirm Password' required/>
+                    </div>
                 )}
-                <br />
-                {!newUser && (
+                {!createUser && (
                     <div className='form-group form-check'>
-                        <input
-                            type='checkbox'
-                            className='form-check-input'
-                            id='exampleCheck1'
-                        />
-                        <label
-                            className='form-check-label'
-                            htmlFor='exampleCheck1'
-                        >
-                            Remember Me
-                        </label>
+                        <input type='checkbox' className='form-check-input' id='exampleCheck1'/>
+                        <label className='form-check-label' htmlFor='exampleCheck1'>Remember Me</label>
                     </div>
                 )}
                 <br />
-                <input
-                    type='submit'
-                    className='btn btn-danger form-control'
-                    value={newUser ? 'Create an account' : 'Login'}
-                />
+                <input type='submit' className='btn btn-danger form-control' value={createUser ? 'Create an account' : 'Login'}/>
             </form>
             <br />
             <h6>
-                {newUser
-                    ? 'Already have an account?'
-                    : "Don't have an account?"}{' '}
-                <span
-                    className='text-danger'
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => setNewUser(!newUser)}
-                >
-                    {newUser ? 'Login' : 'Create an account'}
-                </span>{' '}
+                {createUser ? 'Already have an account?' : "Don't have an account?"}
+                <span className='text-danger' style={{cursor: 'pointer'}} onClick={() => setCreateUser(!createUser)}>
+                    {createUser ? 'Login' : 'Create an account'}
+                </span>
             </h6>
-
             <hr />
-            <button
-                className='btn btn-danger rounded-pill'
-                onClick={handleGoogleSignIn}
-            >
+            <button className='btn btn-danger rounded-pill' onClick={handleGoogleSignIn}>
                 <FontAwesomeIcon icon={faGoogle} /> Continue with Google
             </button>
-            <br />
-            <br />
-            <button
-                className='btn btn-danger rounded-pill'
-                onClick={handleFacebookSignIn}
-            >
+            <button className='btn btn-danger rounded-pill' onClick={handleFacebookSignIn}>
                 <FontAwesomeIcon icon={faFacebook} /> Continue with Facebook
             </button>
         </div>

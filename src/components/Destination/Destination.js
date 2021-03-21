@@ -21,6 +21,9 @@ const Destination = () => {
         if (event.target.name === 'date') {
             location.date = event.target.value;
         }
+        if (event.target.name === 'time') {
+            location.time = event.target.value;
+        }
     };
 
     const [click, setClick] = useState(false);
@@ -86,6 +89,19 @@ const Destination = () => {
                                         required
                                     />
                                 </div>
+                                <div className='form-group'>
+                                    <label htmlFor='exampleInputPassword1'>
+                                        Time
+                                    </label>
+                                    <input
+                                        type='time'
+                                        className='form-control'
+                                        placeholder='To'
+                                        name='time'
+                                        onBlur={handleBlur}
+                                        required
+                                    />
+                                </div>
                                 <input
                                     type='submit'
                                     className='btn btn-primary form-control'
@@ -108,6 +124,10 @@ const Destination = () => {
                                     <tr>
                                         <th>Date</th>
                                         <td>{location.date}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Time</th>
+                                        <td>{location.time}</td>
                                     </tr>
                                 </tbody>
                             </table>
