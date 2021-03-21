@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import firebaseConfig from './firebase.config';
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import firebaseConfig from './firebase.config';
 
 const Login = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
@@ -141,13 +141,9 @@ const Login = () => {
     return (
         <div className='text-center container py-5 w-50'>
             <form onSubmit={handleSubmit} className='border border-secondary p-3 rounded'>
-                <legend className='fw-bold'>
-                    {createUser ? 'Create an account' : 'Login'}
-                </legend>
+                <legend className='fw-bold'>{createUser ? 'Create an account' : 'Login'}</legend>
                 {user.successful && (
-                    <p className='text-success'>
-                        Account {createUser ? 'created' : 'logged in'} successfully.
-                    </p>
+                    <p className='text-success'>Account {createUser ? 'created' : 'logged in'} successfully.</p>
                 )}
                 <p className='text-danger'> {user.error} </p>
                 {createUser && (
@@ -183,12 +179,15 @@ const Login = () => {
                 </span>
             </h6>
             <hr />
-            <button className='btn btn-danger rounded-pill' onClick={handleGoogleSignIn}>
-                <FontAwesomeIcon icon={faGoogle} /> Continue with Google
-            </button>
-            <button className='btn btn-danger rounded-pill' onClick={handleFacebookSignIn}>
-                <FontAwesomeIcon icon={faFacebook} /> Continue with Facebook
-            </button>
+            <div>
+                <button className='btn btn-danger rounded-pill custom-btn' onClick={handleGoogleSignIn}>
+                    <FontAwesomeIcon icon={faGoogle} /> Continue with Google
+                </button>
+                <br/>
+                <button className='btn btn-danger rounded-pill' onClick={handleFacebookSignIn}>
+                    <FontAwesomeIcon icon={faFacebook} /> Continue with Facebook
+                </button>
+            </div>
         </div>
     );
 };

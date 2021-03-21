@@ -34,6 +34,10 @@ body {
 }
 /* end destination style */
 
+.custom-btn {
+    margin: 10px;
+}
+
 /* Large devices (desktops, less than 1200px) */
 @media (min-width: 992px) {
     .custom-bg {
