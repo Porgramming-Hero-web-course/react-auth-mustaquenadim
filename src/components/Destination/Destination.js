@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import vehicles from '../../Data/Data.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserFriends } from '@fortawesome/free-solid-svg-icons';
+import Map from '../Map/Map';
 
 const Destination = () => {
     const [destination, setDestionation] = useState({ from: '', to: '', date: ''});
@@ -107,7 +108,8 @@ const Destination = () => {
                     )}
                 </div>
                 <div className='col-lg-8'>
-                    <iframe className='google-map' title='Google Map' src='https://maps.google.com/maps?q=1000%20Motijheel,%20Dhaka&t=&z=13&ie=UTF8&iwloc=&output=embed'></iframe>
+                    {/* <iframe className='google-map' title='Google Map' src='https://maps.google.com/maps?q=1000%20Motijheel,%20Dhaka&t=&z=13&ie=UTF8&iwloc=&output=embed'></iframe> */}
+                    <Map/>
                 </div>
             </div>
         </div>
