@@ -5,11 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserFriends } from '@fortawesome/free-solid-svg-icons';
 
 const Destination = () => {
-    const [location, setLocation] = useState({
-        from: '',
-        to: '',
-        date: '',
-    });
+    const [location, setLocation] = useState({ from: '', to: '', date: ''});
     const handleBlur = (event) => {
         console.log(event.target.name, event.target.value);
         if (event.target.name === 'from') {
@@ -51,62 +47,22 @@ const Destination = () => {
                         <div className='bg-success p-3 rounded'>
                             <form onSubmit={searchHandler}>
                                 <div className='form-group'>
-                                    <label htmlFor='exampleInputEmail1'>
-                                        Pick From
-                                    </label>
-                                    <input
-                                        type='text'
-                                        className='form-control'
-                                        placeholder='From'
-                                        name='from'
-                                        onBlur={handleBlur}
-                                        required
-                                    />
+                                    <label htmlFor='exampleInputEmail1'>Pick From</label>
+                                    <input type='text' className='form-control' placeholder='From' name='from' onBlur={handleBlur} required/>
                                 </div>
                                 <div className='form-group'>
-                                    <label htmlFor='exampleInputPassword1'>
-                                        Pick To
-                                    </label>
-                                    <input
-                                        required
-                                        type='text'
-                                        className='form-control'
-                                        placeholder='To'
-                                        name='to'
-                                        onBlur={handleBlur}
-                                    />
+                                    <label htmlFor='exampleInputPassword1'>Pick To</label>
+                                    <input type='text' className='form-control' placeholder='To' name='to' onBlur={handleBlur} required/>
                                 </div>
                                 <div className='form-group'>
-                                    <label htmlFor='exampleInputPassword1'>
-                                        Date
-                                    </label>
-                                    <input
-                                        type='date'
-                                        className='form-control'
-                                        placeholder='To'
-                                        name='date'
-                                        onBlur={handleBlur}
-                                        required
-                                    />
+                                    <label htmlFor='exampleInputPassword1'>Date</label>
+                                    <input type='date' className='form-control' placeholder='To' name='date' onBlur={handleBlur} required/>
                                 </div>
                                 <div className='form-group'>
-                                    <label htmlFor='exampleInputPassword1'>
-                                        Time
-                                    </label>
-                                    <input
-                                        type='time'
-                                        className='form-control'
-                                        placeholder='To'
-                                        name='time'
-                                        onBlur={handleBlur}
-                                        required
-                                    />
+                                    <label htmlFor='exampleInputPassword1'>Time</label>
+                                    <input type='time' className='form-control' placeholder='To' name='time' onBlur={handleBlur} required/>
                                 </div>
-                                <input
-                                    type='submit'
-                                    className='btn btn-primary form-control'
-                                    value='Search'
-                                />
+                                <input type='submit' className='btn btn-primary form-control' value='Search'/>
                             </form>
                         </div>
                     ) : (
@@ -134,29 +90,16 @@ const Destination = () => {
                             <div className='card text-center p-2'>
                                 <div className='row no-gutters d-flex align-items-center justify-content-center'>
                                     <div className='col-lg-3'>
-                                        <img
-                                            className='w-100'
-                                            src={transport.image}
-                                            alt='...'
-                                        />
+                                        <img className='w-100' src={transport.image} alt='...'/>
                                     </div>
                                     <div className='col-lg-3'>
-                                        <h5 className='card-title'>
-                                            {transport.transport}
-                                        </h5>
+                                        <h5 className='card-title'>{transport.transport}</h5>
                                     </div>
                                     <div className='col-lg-3'>
-                                        <h5 className='card-title'>
-                                            <FontAwesomeIcon
-                                                icon={faUserFriends}
-                                            />{' '}
-                                            {transport.capacity}
-                                        </h5>
+                                        <h5 className='card-title'><FontAwesomeIcon icon={faUserFriends}/>{transport.capacity}</h5>
                                     </div>
                                     <div className='col-lg-3'>
-                                        <h5 className='card-title'>
-                                            ${transport.rent}
-                                        </h5>
+                                        <h5 className='card-title'>${transport.rent}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -164,11 +107,7 @@ const Destination = () => {
                     )}
                 </div>
                 <div className='col-lg-8'>
-                    <iframe
-                        className='google-map'
-                        title='Google Map'
-                        src='https://maps.google.com/maps?q=1000%20Motijheel,%20Dhaka&t=&z=13&ie=UTF8&iwloc=&output=embed'
-                    ></iframe>
+                    <iframe className='google-map' title='Google Map' src='https://maps.google.com/maps?q=1000%20Motijheel,%20Dhaka&t=&z=13&ie=UTF8&iwloc=&output=embed'></iframe>
                 </div>
             </div>
         </div>
