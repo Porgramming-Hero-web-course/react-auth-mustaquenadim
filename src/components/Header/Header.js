@@ -6,10 +6,10 @@ const Header = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     return (
         <div>
-            <nav className='navbar navbar-expand-lg navbar-light fixed-top'>
-                <div className='container-fluid'>
-                    <Link to='/' className='navbar-brand fw-bold fs-3'>
-                        My Ride
+            <nav className='navbar navbar-expand-lg navbar-light bg-white fw-bold'>
+                <div className='container'>
+                    <Link to='/' className='navbar-brand fs-4 text-uppercase'>
+                        Let<span className='text-lowercase fw-normal'>'s</span> Ride
                     </Link>
                     <button
                         className='navbar-toggler'
@@ -27,12 +27,12 @@ const Header = () => {
                         id='navbarSupportedContent'
                     >
                         <ul className='navbar-nav ml-auto mb-2 mb-lg-0'>
-                            <li className='nav-item px-3'>
+                            <li className='nav-item px-3 mod'>
                                 <Link to='/home' className='nav-link active'>
                                     Home
                                 </Link>
                             </li>
-                            <li className='nav-item px-3'>
+                            <li className='nav-item px-3 mod'>
                                 <Link
                                     to='/destination/1'
                                     className='nav-link active'
@@ -40,24 +40,38 @@ const Header = () => {
                                     Destination
                                 </Link>
                             </li>
-                            <li className='nav-item px-3'>
-                                <Link to='/blog' className='nav-link active'>
+                            <li className='nav-item px-3 mod'>
+                                <Link
+                                    to='/blog'
+                                    className='nav-link active'
+                                >
                                     Blog
                                 </Link>
                             </li>
-                            <li className='nav-item px-3'>
-                                <Link to='/contact' className='nav-link active'>
+                            <li className='nav-item px-3 mod'>
+                                <Link
+                                    to='/contact'
+                                    className='nav-link active'
+                                >
                                     Contact
                                 </Link>
                             </li>
-                            <li className='nav-item px-3'>
-                                <h5 className='nav-link active'>{loggedInUser.name || loggedInUser.displayName}</h5>
-                            </li>
-                            <li className='nav-item px-3'>
-                                <Link to='/login' className='nav-link active btn btn-info text-white'>
-                                    Login
-                                </Link>
-                            </li>
+                            {loggedInUser.displayName ? (
+                                <li className='nav-item px-3 bg-success rounded-pill'>
+                                    <h5 className='nav-link active text-white text-center'>
+                                        {loggedInUser.displayName}
+                                    </h5>
+                                </li>
+                            ) : (
+                                <li className='nav-item px-3 btn-danger'>
+                                    <Link
+                                        to='/login'
+                                        className='nav-link active text-white text-center'
+                                    >
+                                        Login
+                                    </Link>
+                                </li>
+                            )}
                         </ul>
                     </div>
                 </div>

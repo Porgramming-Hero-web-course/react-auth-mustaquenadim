@@ -13,7 +13,7 @@ const Login = () => {
     const location = useLocation();
     const { from } = location.state || { from: { pathname: '/' } };
 
-    if (firebase.apps.length === 0) {
+    if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
 
@@ -23,15 +23,8 @@ const Login = () => {
         firebase
             .auth()
             .signInWithPopup(provider)
-            .then((result) => {
-                var credential = result.credential;
-                var token = credential.accessToken;
-                const { displayName, email } = result.user;
-                const signedInUser = {
-                    name: displayName,
-                    email: email,
-                };
-                setLoggedInUser(signedInUser);
+            .then((response) => {
+                setLoggedInUser(response.user);
                 history.replace(from);
             })
             .catch((error) => {
@@ -41,6 +34,7 @@ const Login = () => {
 
     // log in using email and password
     const [newUser, setNewUser] = useState(true);
+    // const [nam, setName] = useState('');
 
     const [user, setUser] = useState({
         isSignedIn: false,
@@ -74,20 +68,18 @@ const Login = () => {
     };
 
     const handleSubmit = (event) => {
-        console.log(user);
-        if (newUser && user.email && (user.password === user.confirmPassword)) {
+        if (newUser && user.email && user.password && user.confirmPassword) {
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(user.email, user.password)
                 .then((response) => {
-                    console.log(response.user);
-                    const newUser = { ...response.user };
+                    const newUser = { ...user };
                     newUser.error = '';
                     newUser.successful = true;
                     setUser(newUser);
                     updateUserName(user.name);
-                    setLoggedInUser(newUser);
-                    history.replace(from);
+                    // setLoggedInUser(newUser);
+                    // history.replace(from);
                 })
                 .catch((error) => {
                     const newUser = { ...user };
@@ -102,12 +94,11 @@ const Login = () => {
                 .auth()
                 .signInWithEmailAndPassword(user.email, user.password)
                 .then((response) => {
-                    console.log(response.user);
-                    const newUser = { ...response.user };
+                    // const newUser = { ...user };
+                    const newUser = response.user;
                     newUser.error = '';
                     newUser.successful = true;
                     setUser(newUser);
-                    updateUserName(user.name);
                     setLoggedInUser(newUser);
                     history.replace(from);
                 })
@@ -122,7 +113,6 @@ const Login = () => {
     };
 
     const updateUserName = (name) => {
-        console.log(name);
         const user = firebase.auth().currentUser;
 
         user.updateProfile({
@@ -137,13 +127,13 @@ const Login = () => {
     };
 
     return (
-        <div className='text-center container my-5 py-5 w-50'>
+        <div className='text-center container py-5 w-50'>
             <h1>{user.name}</h1>
             <form
                 onSubmit={handleSubmit}
                 className='border border-secondary p-3 rounded'
             >
-                <legend>{newUser ? 'Create an account' : 'Login'}</legend>
+                <legend className='fw-bold'>{newUser ? 'Create an account' : 'Login'}</legend>
                 {user.successful && (
                     <p className='text-success'>
                         Account {newUser ? 'created' : 'logged in'}{' '}
@@ -167,7 +157,7 @@ const Login = () => {
                     className='form-control'
                     name='email'
                     onBlur={handleBlur}
-                    placeholder='Enter Email'
+                    placeholder='Email'
                     required
                 />
                 <br />
@@ -209,7 +199,7 @@ const Login = () => {
                 <br />
                 <input
                     type='submit'
-                    className='btn btn-primary form-control'
+                    className='btn btn-danger form-control'
                     value={newUser ? 'Create an account' : 'Login'}
                 />
             </form>
@@ -229,7 +219,7 @@ const Login = () => {
 
             <hr />
             <button
-                className='btn btn-primary rounded-pill'
+                className='btn btn-danger rounded-pill'
                 onClick={handleGoogleSignIn}
             >
                 <FontAwesomeIcon icon={faGoogle} /> Continue with Google

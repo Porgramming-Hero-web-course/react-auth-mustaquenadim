@@ -8,7 +8,7 @@ const Home = () => {
         setRide(vehicles);
     }, []);
     return (
-        <div className='custom-bg'>
+        <div className='custom-bg py-5'>
             <div className='container'>
                 <div className='row row-cols-1 row-cols-md-3 g-4'>
                     {ride.map((vehicle) => (

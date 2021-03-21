@@ -37,7 +37,7 @@ const Destination = () => {
     }, [id]);
 
     return (
-        <div className='container my-5 py-4'>
+        <div className='container py-3'>
             <div className='row row-cols-1 row-cols-md-3 g-4'>
                 <div className='col-lg-4'>
                     {!click ? (
