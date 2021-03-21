@@ -22,12 +22,6 @@ const Header = () => {
                             <li className='nav-item px-3 mod'>
                                 <Link to='/destination/1' className='nav-link active'>Destination</Link>
                             </li>
-                            <li className='nav-item px-3 mod'>
-                                <Link to='/blog' className='nav-link active'>Blog</Link>
-                            </li>
-                            <li className='nav-item px-3 mod'>
-                                <Link to='/contact' className='nav-link active'>Contact</Link>
-                            </li>
                             {loggedInUser.displayName ? (
                                 <li className='nav-item px-3 bg-success rounded-pill'>
                                     <h5 className='nav-link active text-white text-center'>

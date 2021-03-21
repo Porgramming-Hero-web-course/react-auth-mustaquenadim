@@ -28,12 +28,6 @@ function App() {
                     <PrivateRoute path='/destination/:id'>
                         <Destination />
                     </PrivateRoute>
-                    <Route path='/blog'>
-                        <Blog />
-                    </Route>
-                    <Route path='/contact'>
-                        <Contact />
-                    </Route>
                     <Route path='/login'>
                         <Login />
                     </Route>

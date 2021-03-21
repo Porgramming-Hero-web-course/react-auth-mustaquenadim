@@ -5,20 +5,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserFriends } from '@fortawesome/free-solid-svg-icons';
 
 const Destination = () => {
-    const [location, setLocation] = useState({ from: '', to: '', date: ''});
+    const [destination, setDestionation] = useState({ from: '', to: '', date: ''});
     const handleBlur = (event) => {
         console.log(event.target.name, event.target.value);
         if (event.target.name === 'from') {
-            location.from = event.target.value;
+            destination.from = event.target.value;
         }
         if (event.target.name === 'to') {
-            location.to = event.target.value;
+            destination.to = event.target.value;
         }
         if (event.target.name === 'date') {
-            location.date = event.target.value;
+            destination.date = event.target.value;
         }
         if (event.target.name === 'time') {
-            location.time = event.target.value;
+            destination.time = event.target.value;
         }
     };
 
@@ -71,19 +71,19 @@ const Destination = () => {
                                 <tbody>
                                     <tr>
                                         <th>From</th>
-                                        <td>{location.from}</td>
+                                        <td>{destination.from}</td>
                                     </tr>
                                     <tr>
                                         <th>To</th>
-                                        <td>{location.to}</td>
+                                        <td>{destination.to}</td>
                                     </tr>
                                     <tr>
                                         <th>Date</th>
-                                        <td>{location.date}</td>
+                                        <td>{destination.date}</td>
                                     </tr>
                                     <tr>
                                         <th>Time</th>
-                                        <td>{location.time}</td>
+                                        <td>{destination.time}</td>
                                     </tr>
                                 </tbody>
                             </table>
