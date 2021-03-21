@@ -22,17 +22,17 @@ const Destination = () => {
         }
     };
 
-    const [click, setClick] = useState(false);
+    const [search, setSearch] = useState(false);
     const searchHandler = (event) => {
-        setClick(!click);
+        setSearch(!search);
         event.preventDefault();
     };
 
     const { id } = useParams();
-    const [transport, setTransportInfo] = useState({});
+    const [vehicle, setVehicle] = useState({});
     useEffect(() => {
         const info = vehicles.filter((type) => id == type.id);
-        setTransportInfo(info[0]);
+        setVehicle(info[0]);
     }, [id]);
 
     return (
@@ -40,10 +40,10 @@ const Destination = () => {
             <div className='row row-cols-1 row-cols-md-3 g-4'>
                 <div className='col-lg-4'>
                     <div className='bg-warning p-3 rounded'>
-                        <h2>{transport.transport}</h2>
+                        <h2>{vehicle.transport} Ride</h2>
                     </div>
                     <br />
-                    {!click ? (
+                    {!search ? (
                         <div className='bg-success p-3 rounded'>
                             <form onSubmit={searchHandler}>
                                 <div className='form-group'>
@@ -90,16 +90,16 @@ const Destination = () => {
                             <div className='card text-center p-2'>
                                 <div className='row no-gutters d-flex align-items-center justify-content-center'>
                                     <div className='col-lg-3'>
-                                        <img className='w-100' src={transport.image} alt='...'/>
+                                        <img className='w-100' src={vehicle.image} alt='...'/>
                                     </div>
                                     <div className='col-lg-3'>
-                                        <h5 className='card-title'>{transport.transport}</h5>
+                                        <h5 className='card-title'>{vehicle.transport}</h5>
                                     </div>
                                     <div className='col-lg-3'>
-                                        <h5 className='card-title'><FontAwesomeIcon icon={faUserFriends}/>{transport.capacity}</h5>
+                                        <h5 className='card-title'><FontAwesomeIcon icon={faUserFriends}/>{vehicle.capacity}</h5>
                                     </div>
                                     <div className='col-lg-3'>
-                                        <h5 className='card-title'>${transport.rent}</h5>
+                                        <h5 className='card-title'>${vehicle.price}</h5>
                                     </div>
                                 </div>
                             </div>

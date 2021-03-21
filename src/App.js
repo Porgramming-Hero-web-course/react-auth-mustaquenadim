@@ -5,8 +5,6 @@ import Header from './components/Header/Header';
 import Home from './components/Home/Home';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Destination from './components/Destination/Destination';
-import Blog from './components/Blog/Blog';
-import Contact from './components/Contact/Contact';
 import Login from './components/Login/Login';
 import NoMatch from './components/NoMatch/NoMatch';
 

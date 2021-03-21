@@ -18,13 +18,14 @@ const Login = () => {
     }
 
     // Create an account or Login
-    const [createUser, setCreateUser] = useState(true);
+    const [newUser, setNewUser] = useState(true);
     const [user, setUser] = useState({
         name: '',
         email: '',
         password: '',
         confirmPassword: '',
         error: '',
+        invalid: '',
         successful: false,
     });
 
@@ -44,6 +45,14 @@ const Login = () => {
             newUser[event.target.name] = event.target.value;
             setUser(newUser);
         }
+        if (!isFieldValid){
+            newUser = { ...user };
+            newUser.invalid = 'Email or Password is not valid';
+            setUser(newUser);
+        }
+        else {
+            newUser.invalid = '';
+        }
         if (newUser.confirmPassword && newUser.password !== newUser.confirmPassword) {
             newUser.error = 'Password not matched';
         } 
@@ -53,7 +62,7 @@ const Login = () => {
     };
 
     const handleSubmit = (event) => {
-        if (createUser && user.email && user.password === user.confirmPassword) {
+        if (newUser && user.email && user.password === user.confirmPassword) {
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(user.email, user.password)
@@ -72,7 +81,7 @@ const Login = () => {
                 });
         }
 
-        if (!createUser && user.email && user.password) {
+        if (!newUser && user.email && user.password) {
             firebase
                 .auth()
                 .signInWithEmailAndPassword(user.email, user.password)
@@ -141,12 +150,11 @@ const Login = () => {
     return (
         <div className='text-center container py-5 w-50'>
             <form onSubmit={handleSubmit} className='border border-secondary p-3 rounded'>
-                <legend className='fw-bold'>{createUser ? 'Create an account' : 'Login'}</legend>
-                {user.successful && (
-                    <p className='text-success'>Account {createUser ? 'created' : 'logged in'} successfully.</p>
-                )}
+                <legend className='fw-bold'>{newUser ? 'Create an account' : 'Login'}</legend>
+                {user.successful && (<p className='text-success'>Account {newUser ? 'created' : 'logged in'} successfully.</p>)}
                 <p className='text-danger'> {user.error} </p>
-                {createUser && (
+                <p className='text-danger'> {user.invalid} </p>
+                {newUser && (
                     <div className='form-group'>
                         <input type='text' className='form-control' name='name' onBlur={onBlurHandler} placeholder='Name' required/>
                     </div>
@@ -157,25 +165,25 @@ const Login = () => {
                 <div className='form-group'>
                     <input type='password' className='form-control' name='password' onBlur={onBlurHandler} placeholder='Password' required/>
                 </div>
-                {createUser && (
+                {newUser && (
                     <div className='form-group'>
                         <input type='password' name='confirmPassword' className='form-control' onBlur={onBlurHandler} placeholder='Confirm Password' required/>
                     </div>
                 )}
-                {!createUser && (
+                {!newUser && (
                     <div className='form-group form-check'>
                         <input type='checkbox' className='form-check-input' id='exampleCheck1'/>
                         <label className='form-check-label' htmlFor='exampleCheck1'>Remember Me</label>
                     </div>
                 )}
                 <br />
-                <input type='submit' className='btn btn-danger form-control' value={createUser ? 'Create an account' : 'Login'}/>
+                <input type='submit' className='btn btn-danger form-control' value={newUser ? 'Create an account' : 'Login'}/>
             </form>
             <br />
             <h6>
-                {createUser ? 'Already have an account?' : "Don't have an account?"}
-                <span className='text-danger' style={{cursor: 'pointer'}} onClick={() => setCreateUser(!createUser)}>
-                    {createUser ? 'Login' : 'Create an account'}
+                {newUser ? 'Already have an account?' : "Don't have an account?"}
+                <span className='text-danger' style={{cursor: 'pointer'}} onClick={() => setNewUser(!newUser)}>
+                    {newUser ? 'Login' : 'Create an account'}
                 </span>
             </h6>
             <hr />
