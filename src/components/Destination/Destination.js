@@ -40,6 +40,10 @@ const Destination = () => {
         <div className='container py-3'>
             <div className='row row-cols-1 row-cols-md-3 g-4'>
                 <div className='col-lg-4'>
+                    <div className='bg-warning p-3 rounded'>
+                        <h2>{transport.transport}</h2>
+                    </div>
+                    <br />
                     {!click ? (
                         <div className='bg-success p-3 rounded'>
                             <form onSubmit={searchHandler}>
@@ -67,7 +71,6 @@ const Destination = () => {
                                         placeholder='To'
                                         name='to'
                                         onBlur={handleBlur}
-                                        
                                     />
                                 </div>
                                 <div className='form-group'>

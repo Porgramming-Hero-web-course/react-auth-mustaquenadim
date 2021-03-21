@@ -5,7 +5,7 @@ import firebaseConfig from './firebase.config';
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 const Login = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
@@ -20,6 +20,21 @@ const Login = () => {
     // google sign in handle
     const handleGoogleSignIn = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
+        firebase
+            .auth()
+            .signInWithPopup(provider)
+            .then((response) => {
+                setLoggedInUser(response.user);
+                history.replace(from);
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+    };
+
+    // facebook sign in handle
+    const handleFacebookSignIn = () => {
+        var provider = new firebase.auth.FacebookAuthProvider();
         firebase
             .auth()
             .signInWithPopup(provider)
@@ -47,7 +62,9 @@ const Login = () => {
     });
 
     const handleBlur = (event) => {
+        let newUser;
         let isFieldValid = true;
+        let isTwoPasswordValid = true;
         console.log(event.target.name, event.target.value);
         if (event.target.name === 'email') {
             isFieldValid = /\S+@\S+\.\S+/.test(event.target.value);
@@ -58,17 +75,28 @@ const Login = () => {
         ) {
             const isPasswordValid = event.target.value.length > 6;
             const passwordHasNumber = /\d{1}/.test(event.target.value);
-            isFieldValid = isPasswordValid && passwordHasNumber;
+            isTwoPasswordValid = isPasswordValid && passwordHasNumber;
         }
-        if (isFieldValid) {
-            const newUser = { ...user };
+        if (isFieldValid && isTwoPasswordValid) {
+            // const newUser = { ...user };
+            newUser = { ...user };
+            console.log(newUser.password, newUser.confirmPassword);
             newUser[event.target.name] = event.target.value;
             setUser(newUser);
+            // console.log(user);
+        }
+        if (isFieldValid && isTwoPasswordValid &&
+            newUser.confirmPassword &&
+            newUser.password !== newUser.confirmPassword
+        ) {
+            newUser.error = 'Password is not valid or Password not matched';
+        } else {
+            newUser.error = ' ';
         }
     };
 
     const handleSubmit = (event) => {
-        if (newUser && user.email && user.password && user.confirmPassword) {
+        if (newUser && user.email && user.password === user.confirmPassword) {
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(user.email, user.password)
@@ -128,12 +156,13 @@ const Login = () => {
 
     return (
         <div className='text-center container py-5 w-50'>
-            <h1>{user.name}</h1>
             <form
                 onSubmit={handleSubmit}
                 className='border border-secondary p-3 rounded'
             >
-                <legend className='fw-bold'>{newUser ? 'Create an account' : 'Login'}</legend>
+                <legend className='fw-bold'>
+                    {newUser ? 'Create an account' : 'Login'}
+                </legend>
                 {user.successful && (
                     <p className='text-success'>
                         Account {newUser ? 'created' : 'logged in'}{' '}
@@ -223,6 +252,14 @@ const Login = () => {
                 onClick={handleGoogleSignIn}
             >
                 <FontAwesomeIcon icon={faGoogle} /> Continue with Google
+            </button>
+            <br />
+            <br />
+            <button
+                className='btn btn-danger rounded-pill'
+                onClick={handleFacebookSignIn}
+            >
+                <FontAwesomeIcon icon={faFacebook} /> Continue with Facebook
             </button>
         </div>
     );
