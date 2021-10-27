@@ -16,4 +16,4 @@
 
 ## Available Links
 
-[Visit Website](https://react-auth-e0e8e.web.app/) | [Watch Code](https://github.com/mustaquenadim/lets-ride-react)
+[Visit Website](https://react-auth-e0e8e.web.app/) | [Watch Code](https://github.com/mustaquenadim/lets-ride)
