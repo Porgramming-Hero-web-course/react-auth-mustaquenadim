@@ -1,21 +1,19 @@
-# Let's Ride
+[Programming Hero](https://web.programming-hero.com/) - Complete Web Development with Jhankar Mahbub `Batch 3`
 
-This is a available transport website. But it is not completely dynamic. You can say it's a dummy website using React.
+# Assignment 9 : React Authentication `Let's Ride`
 
-## 1 `React Router`
+**Let's Ride** is a ride sharing platform. By this platform, anyone can elect ride (Bike, Bus, Train, Ship) and enter the location and journey time where and when he/she wants to go.
 
-In this project, I've used react-router.
+![Screenshot](https://user-images.githubusercontent.com/56265819/139123314-03436465-c4f5-4174-9714-006ab4ba298c.png)
 
-### 1.1 `React Private Route`
+## Description
 
-I've also used react private route i.e. protected route. It will stop you to visit protected route without sign in.
+*Project description hasn't been updated yet.*
 
-## 2 `React Bootstrap`
+## Technology
 
-I've used react-bootstrap to make my site responsive for Mobile-UI and Desktop-UI.
+`ReactJS` `React Router` `Firebase Authentication` `CSS` `Bootstrap`
 
-## 3 `Font Awesome`
+## Available Links
 
-You can see a few icons in this site. I've used these icons by the help of font-awesome.
-
-## `LIVE SITE LINK`: https://react-auth-e0e8e.web.app/
+[Visit Website](https://react-auth-e0e8e.web.app/) | [Watch Code](https://github.com/mustaquenadim/lets-ride-react)
